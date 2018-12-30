@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value = "/g")
 public class GreetingController {
 
     private static final String TEMPLATE = "Hello, %s!";
 
     private static final String DEFAULT_GREETING = "World";
+
     @RequestMapping(path = "/greeting", method= RequestMethod.GET)
     public HttpEntity<Greeting> greeting(
             @RequestParam(value = "name", required = false, defaultValue = DEFAULT_GREETING) String name) {
