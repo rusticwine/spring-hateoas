@@ -1,6 +1,7 @@
 package rest_2.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import rest_2.repository.GymMembershipRepository;
 import rest_2.repository.PersonRepository;
+import rest_2.repository.PersonRepositoryImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,9 +22,11 @@ import java.util.stream.Collectors;
 public class GymMembershipController {
 
     @Autowired
-    private PersonRepository personRepository;
+//    @Qualifier("memoryImpl")
+    private PersonRepositoryImpl personRepository;
 
     @Autowired
+    @Qualifier("memoryImplGym")
     private GymMembershipRepository gymMembershipRepository;
 
     @GetMapping

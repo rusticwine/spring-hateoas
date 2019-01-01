@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.StreamSupport;
 
-@Component("memoryImpl")
+@Component("memoryImplGym")
 public class GymMembershipRepositoryImpl implements GymMembershipRepository {
 
     Map<Long, GymMembership> map = new ConcurrentHashMap<>();
