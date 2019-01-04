@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages={"rest_2.rest", "rest_2.repository"})
+@ComponentScan(basePackages={"rest_2.rest", "rest_2.repository", "hello"})
 public class Application {
 
     public static void main(String[] args) {
