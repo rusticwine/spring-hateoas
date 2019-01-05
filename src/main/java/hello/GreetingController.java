@@ -18,16 +18,16 @@ public class GreetingController {
     private static final String DEFAULT_GREETING = "World";
 
     @RequestMapping(path = "/greeting", method= RequestMethod.GET)
-    public HttpEntity<Greeting> greeting(
+    public HttpEntity<GreetingResource> greeting(
             @RequestParam(value = "name", required = false, defaultValue = DEFAULT_GREETING) String name) {
-        Greeting greeting = new Greeting(String.format(TEMPLATE, name));
-        greeting.add(ControllerLinkBuilder.linkTo(
+        GreetingResource greetingResource = new GreetingResource(String.format(TEMPLATE, name));
+        greetingResource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(GreetingController.class).greeting(name)).withSelfRel());
-        greeting.add(ControllerLinkBuilder.linkTo(
+        greetingResource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(GreetingController.class).greeting(DEFAULT_GREETING)).withSelfRel());
 
-        greeting.add(ControllerLinkBuilder.linkTo(
+        greetingResource.add(ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(GreetingController.class).greeting(DEFAULT_GREETING + "_a")).withSelfRel());
-        return new ResponseEntity<>(greeting, HttpStatus.OK);
+        return new ResponseEntity<>(greetingResource, HttpStatus.OK);
     }
 }
