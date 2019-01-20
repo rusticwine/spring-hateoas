@@ -6,13 +6,13 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import rest_2.entity.Person;
 import rest_2.repository.PersonRepository;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -44,6 +44,27 @@ public class PersonController {
                 .map(p -> ResponseEntity.ok(new PersonResource(p)))
                 .orElseThrow(() -> new IllegalArgumentException("Person not found: " + id));
                 //.orElseThrow(() -> new PersonNotFoundException(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<PersonResource> post(@RequestBody final Person personFromRequest) {
+        final Person person = personRepository.save(new Person(personFromRequest));
+        final URI uri =
+                MvcUriComponentsBuilder.fromController(getClass())
+                        .path("/{id}")
+                        .buildAndExpand(person.getId())
+                        .toUri();
+        return ResponseEntity.created(uri).body(new PersonResource(person));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonResource> put(
+            @PathVariable("id") final long id, @RequestBody Person personFromRequest) {
+        final Person person = new Person(personFromRequest, id);
+        personRepository.save(person);
+        final PersonResource resource = new PersonResource(person);
+        final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
+        return ResponseEntity.created(uri).body(resource);
     }
 
 }
