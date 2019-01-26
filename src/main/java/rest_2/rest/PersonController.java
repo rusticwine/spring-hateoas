@@ -34,6 +34,7 @@ public class PersonController {
         final Resources<PersonResource> resources = new Resources<>(collection);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
+        resources.add(new Link(uriString, "new self"));
         return ResponseEntity.ok(resources);
     }
 

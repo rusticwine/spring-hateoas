@@ -1,5 +1,7 @@
 package rest_2.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,7 @@ import javax.persistence.GenerationType;
 import java.util.Calendar;
 import java.util.List;
 
-@Getter
+@Data
 public class Person {
 
     @Getter
@@ -15,6 +17,7 @@ public class Person {
     private long id;
     private String firstName;
     private String lastName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.mm.yyyy")
     private Calendar birthDate;
 
     private List<GymMembership> memberships;
